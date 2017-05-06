@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
@@ -62,7 +63,16 @@ namespace MVC5Course.Controllers
                 return RedirectToAction("Index");
             }
 
+            //ViewBag.product = product;
+
             return View(product); // 輸入錯誤時繼續顯示輸入的資料在頁面上
+        }
+
+        public class NewMergeData
+        {
+            public IEnumerable<Product> products { get; set; }
+            public Product prod { get; set; }
+
         }
 
         // GET: Products/Edit/5
@@ -130,6 +140,22 @@ namespace MVC5Course.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ListProducts()
+        {
+            var data = db.Product
+                .Where(p => p.Active == true)
+                .Select(p => new ProductLiteVM
+                {
+                    ProductId= p.ProductId,
+                    ProductName = p.ProductName,
+                    Price = p.Price,
+                    Stock = p.Stock
+                })
+                .Take(10);
+
+            return View(data);
         }
     }
 }
