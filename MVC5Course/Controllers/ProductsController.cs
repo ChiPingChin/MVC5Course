@@ -15,10 +15,15 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(bool Active = true)
         {
             //return View(db.Product.ToList());
-            return View(db.Product.OrderByDescending(p => p.ProductId).Take(10));
+            //var data = db.Product.OrderByDescending(p => p.ProductId).Take(10);
+            var data = db.Product
+                .Where(x => x.Active.HasValue && x.Active == Active)
+                .OrderByDescending(p => p.ProductId).Take(10);
+
+            return View(data);
         }
 
         // GET: Products/Details/5
@@ -49,14 +54,15 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
             {
                 db.Product.Add(product);
                 db.SaveChanges();
+                //TempData["Msg"] = "新增成功!!";
                 return RedirectToAction("Index");
             }
 
-            return View(product);
+            return View(product); // 輸入錯誤時繼續顯示輸入的資料在頁面上
         }
 
         // GET: Products/Edit/5
@@ -93,6 +99,7 @@ namespace MVC5Course.Controllers
         // GET: Products/Delete/5
         public ActionResult Delete(int? id)
         {
+            // <Model Binding> 把資料讀入 ACTION 的參數中的功能
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
