@@ -157,5 +157,28 @@ namespace MVC5Course.Controllers
 
             return View(data);
         }
+
+        public ActionResult CreateProduct()
+        {
+            return View();
+        }
+
+        [HttpPost] //
+        public ActionResult CreateProduct(ProductLiteVM data)  // 使用 ViewModel (較佳)
+        //public ActionResult CreateProduct(
+        //    [Bind(Include = "ProductName,Price,Stock")]  // 只會接受此三欄位個欄位資料，其他欄位為預設值，且會原定義受驗證(不佳)
+        //    Product data)
+        {
+            if (ModelState.IsValid)
+            {
+                // TODO: 儲存資料進資料庫...
+
+                // 儲存成功，導向顯示產品 List 頁面(用自製的 ViewModel 顯示資料內容)
+                return RedirectToAction("ListProducts");
+            }
+
+            // 驗證失敗，繼續顯示原本的表單
+            return View();
+        }
     }
 }

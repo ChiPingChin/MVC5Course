@@ -12,6 +12,11 @@ namespace MVC5Course.Models
 	{
 	}
 
+    //public class Product1
+    //{
+    //    public string ProductName { get; set; }
+    //}
+
     public partial class ProductPartial
     {
         public int ProductId { get; set; }
