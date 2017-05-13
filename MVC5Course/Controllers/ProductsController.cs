@@ -13,16 +13,36 @@ namespace MVC5Course.Controllers
 {
     public class ProductsController : Controller
     {
-        private FabricsEntities db = new FabricsEntities();
+        //private FabricsEntities db = new FabricsEntities();
+
+        // 改透過 Repository 服務去存取 DB
+        ProductRepository repo = RepositoryHelper.GetProductRepository();       
 
         // GET: Products
         public ActionResult Index(bool Active = true)
         {
             //return View(db.Product.ToList());
             //var data = db.Product.OrderByDescending(p => p.ProductId).Take(10);
-            var data = db.Product
-                .Where(x => x.Active.HasValue && x.Active == Active)
-                .OrderByDescending(p => p.ProductId).Take(10);
+
+            // 使用 Repository 方式操作資料，隱藏商業邏輯，不寫在 Controller，改寫在 Repository 中
+            // 法一
+            //var repo = new ProductRepository();
+            //repo.UnitOfWork = new EFUnitOfWork();
+            // 法二 (法一的簡寫方式)
+            //ProductRepository repo = RepositoryHelper.GetProductRepository();
+
+            //var data = db.Product
+            //    .Where(x => x.Active.HasValue && x.Active == Acㄋtive)
+            //    .OrderByDescending(p => p.ProductId).Take(10);
+
+            //var data = repo.All()  // 在 Controller 中完全看不到 EF 操作(多隔了一層)
+            //   .Where(x => x.Active.HasValue && x.Active == Active)
+            //   .OrderByDescending(p => p.ProductId).Take(10);
+                        
+            // 改用 Repository 方式存取
+            var data = repo.All(Active)
+                 .Where(p => p.Active.HasValue && p.Active.Value == Active)
+                  .OrderByDescending(p => p.ProductId).Take(10);
 
             return View(data);
         }
@@ -34,7 +54,12 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+
+            // 註解：直接用 EF 方式存取，並將商業邏輯寫在 Controller 中(不佳)
+            // Product product = db.Product.Find(id);
+            // 改用 Repository 方式存取 (隱藏商業邏輯在 Repository 中)(較佳)
+            Product product = repo.Get單筆資料ByProductId(id.Value);
+
             if (product == null)
             {
                 return HttpNotFound();
@@ -57,8 +82,13 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
             {
-                db.Product.Add(product);
-                db.SaveChanges();
+                //db.Product.Add(product);
+                //db.SaveChanges();
+
+                // 改透過 Repository 服務去存取 DB
+                repo.Add(product);
+                repo.UnitOfWork.Commit();
+
                 //TempData["Msg"] = "新增成功!!";
                 return RedirectToAction("Index");
             }
@@ -82,7 +112,10 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+            //Product product = db.Product.Find(id);
+            // 改透過 Repository 服務去存取 DB
+            Product product = repo.Get單筆資料ByProductId(id);
+
             if (product == null)
             {
                 return HttpNotFound();
@@ -99,8 +132,13 @@ namespace MVC5Course.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(product).State = EntityState.Modified;
-                db.SaveChanges();
+                //db.Entry(product).State = EntityState.Modified;
+                //db.SaveChanges();
+
+                // 改透過 Repository 服務去存取 DB
+                repo.Update(product);
+                repo.UnitOfWork.Commit();
+
                 return RedirectToAction("Index");
             }
             return View(product);
@@ -114,7 +152,10 @@ namespace MVC5Course.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Product.Find(id);
+
+            //Product product = db.Product.Find(id);
+            // 改透過 Repository 服務去存取 DB
+            Product product = repo.Get單筆資料ByProductId(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -127,25 +168,34 @@ namespace MVC5Course.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Product.Find(id);
-            db.Product.Remove(product);
-            db.SaveChanges();
+            //Product product = db.Product.Find(id);
+            //db.Product.Remove(product);
+            //db.SaveChanges();
+
+            // 改透過 Repository 服務去存取 DB
+            Product product = repo.Get單筆資料ByProductId(id);
+            repo.Delete(product);
+            repo.UnitOfWork.Commit();
+
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+        // 改透過 Repository 服務去存取 DB，就不需要以下程式碼去釋放 FabricsEntities 資源了
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         public ActionResult ListProducts()
         {
-            var data = db.Product
-                .Where(p => p.Active == true)
+            //var data = db.Product
+            //    .Where(p => p.Active == true)
+            // 改透過 Repository 服務去存取 DB
+            var data = repo.GetProduct列表頁所有資料(true)
                 .Select(p => new ProductLiteVM
                 {
                     ProductId= p.ProductId,
