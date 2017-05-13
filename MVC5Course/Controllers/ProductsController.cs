@@ -40,9 +40,11 @@ namespace MVC5Course.Controllers
             //   .OrderByDescending(p => p.ProductId).Take(10);
                         
             // 改用 Repository 方式存取
-            var data = repo.All(Active)
-                 .Where(p => p.Active.HasValue && p.Active.Value == Active)
-                  .OrderByDescending(p => p.ProductId).Take(10);
+            //var data = repo.All(Active)
+            //     .Where(p => p.Active.HasValue && p.Active.Value == Active)
+            //      .OrderByDescending(p => p.ProductId).Take(10);
+
+            var data = repo.GetProduct列表頁所有資料(Active, ShowAll: false);
 
             return View(data);
         }

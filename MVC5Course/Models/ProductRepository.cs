@@ -48,9 +48,17 @@ namespace MVC5Course.Models
             {
                 all = base.All();  // 回傳 IQueryable，表示此時尚未真正去存取 DB (資料庫沒有 Loading)
             }
-            return all
+            else // Not Show All
+            {
+                all = all
                 .Where(p => p.Active.HasValue && p.Active.Value == Active)
                 .OrderByDescending(p => p.ProductId).Take(10);
+            }
+
+            return all;
+            //return all
+            //    .Where(p => p.Active.HasValue && p.Active.Value == Active)
+            //    .OrderByDescending(p => p.ProductId).Take(10);
         }
 
         public void Update(Product product)
