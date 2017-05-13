@@ -176,8 +176,17 @@ namespace MVC5Course.Controllers
 
             // 改透過 Repository 服務去存取 DB
             Product product = repo.Get單筆資料ByProductId(id);
+
+            //// 一併刪除下面的訂單資料
+            //var repoOrderLines = RepositoryHelper.GetOrderLineRepository(repo.UnitOfWork);  // 必須用同一個 Context 才能一次 Commit 成一個 Tranx
+            //foreach (var item in product.OrderLine)
+            //{
+            //    repoOrderLines.Delete(item);
+            //}
+
             // 強闢關閉驗證
             repo.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;
+
             repo.Delete(product);  // override 改為將屬性 Is刪除 設為 true，而非真正刪除該筆紀錄
             repo.UnitOfWork.Commit();
 
