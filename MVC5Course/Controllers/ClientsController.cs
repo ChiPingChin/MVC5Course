@@ -15,18 +15,18 @@ namespace MVC5Course.Controllers
     {
         private FabricsEntities db = new FabricsEntities();
 
+        private void GetClients()
+        {
+            var client = db.Client.Include(c => c.Occupation).Take(10);
+            ViewData.Model = client;
+        }
+
         // GET: Clients
         public ActionResult BatchUpdate()
         {
             GetClients();
 
             return View();
-        }
-
-        private void GetClients()
-        {
-            var client = db.Client.Include(c => c.Occupation).Take(10);
-            ViewData.Model = client;
         }
 
         [HttpPost]
@@ -41,8 +41,9 @@ namespace MVC5Course.Controllers
                     c.MiddleName = item.MiddleName;
                     c.LastName = item.LastName;
                 }
-
                 db.SaveChanges();
+
+                return RedirectToAction("BatchUpdate");
             }
 
             GetClients();
