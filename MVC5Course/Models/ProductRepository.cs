@@ -66,6 +66,16 @@ namespace MVC5Course.Models
             this.UnitOfWork.Context.Entry(product).State = EntityState.Modified;
         }
 
+        public override void Delete(Product entity)
+        {
+            //base.Delete(entity);
+
+            entity.Is刪除 = true;
+
+            // Controller 才決定交易，這邊不應該決定交易，由 Controller 做 Commit
+            //this.UnitOfWork.Commit();
+        }
+
     }
 
     public interface IProductRepository : IRepository<Product>

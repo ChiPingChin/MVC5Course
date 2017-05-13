@@ -176,7 +176,9 @@ namespace MVC5Course.Controllers
 
             // 改透過 Repository 服務去存取 DB
             Product product = repo.Get單筆資料ByProductId(id);
-            repo.Delete(product);
+            // 強闢關閉驗證
+            repo.UnitOfWork.Context.Configuration.ValidateOnSaveEnabled = false;
+            repo.Delete(product);  // override 改為將屬性 Is刪除 設為 true，而非真正刪除該筆紀錄
             repo.UnitOfWork.Commit();
 
             return RedirectToAction("Index");
