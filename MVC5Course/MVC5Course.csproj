@@ -177,6 +177,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\EFController.cs" />
     <Compile Include="Controllers\HelloController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -269,6 +270,7 @@
     </Compile>
     <Compile Include="Models\ValidationAttributes\MaxWordsAttribute.cs" />
     <Compile Include="Models\ValidationAttributes\商品名稱必須包含Will字串Attribute.cs" />
+    <Compile Include="Models\ViewModels\ClientBatchUpdateVM.cs" />
     <Compile Include="Models\ViewModels\ProductBatchUpdateVM.cs" />
     <Compile Include="Models\ViewModels\ProductListFilterVM.cs" />
     <Compile Include="Models\ViewModels\ProductLiteVM.cs" />
@@ -396,6 +398,7 @@
     <Content Include="Views\EF\Delete.cshtml" />
     <Content Include="Views\EF\Details.cshtml" />
     <Content Include="Views\Shared\SuccessRedirect.cshtml" />
+    <Content Include="Views\Clients\BatchUpdate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MVC5Course.Models.Client>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@using (Html.BeginForm())
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreditRating)
+            </th>
+
+        </tr>
+
+        @{
+            var items = Model.ToArray();
+        }
+
+        @for (int i = 0; i < items.Length; i++)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => items[i].ClientId)
+                    @Html.EditorFor(modelItem => items[i].FirstName)
+                    @Html.ValidationMessageFor(modelItem => items[i].FirstName)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].MiddleName)
+                    @Html.ValidationMessageFor(modelItem => items[i].MiddleName)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].LastName)
+                    @Html.ValidationMessageFor(modelItem => items[i].LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].DateOfBirth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].CreditRating)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+
+    <button>批次更新資料</button>
+}
