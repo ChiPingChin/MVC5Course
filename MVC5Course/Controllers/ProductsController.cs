@@ -229,7 +229,7 @@ namespace MVC5Course.Controllers
         /// <param name="s1">Stock Min</param>
         /// <param name="s2">Stock Max</param>
         /// <returns></returns>
-        public ActionResult ListProducts(string q,int? s1,int? s2)
+        public ActionResult ListProducts(string q,int s1 = 0,int s2 = 9999)
         {
             //var data = db.Product
             //    .Where(p => p.Active == true)
@@ -238,14 +238,15 @@ namespace MVC5Course.Controllers
             var data = repo.GetProduct列表頁所有資料(true);
 
             // 篩選輸入條件
-            if (!string.IsNullOrEmpty(q) && s1 != null && s2 != null)
+            if (!string.IsNullOrEmpty(q))
             {
                 data = data.Where(
-                    p => p.ProductName.Contains(q)
-                         && p.Stock >= s1 
-                         && p.Stock <= s2
-                );
+                  p => p.ProductName.Contains(q));               
             }
+
+            data = data.Where(
+                   p => p.Stock >= s1
+                        && p.Stock <= s2);
 
             // 轉為 ViewModel 物件集合
             ViewData.Model = 
