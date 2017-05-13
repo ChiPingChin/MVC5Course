@@ -10,9 +10,9 @@ using System.Data.Entity.Validation;
 namespace MVC5Course.Controllers
 {
     //[Authorize]
-    public class EFController : Controller
+    public class EFController : BaseController
     {
-        FabricsEntities db = new FabricsEntities();
+        //FabricsEntities db = new FabricsEntities();
 
         // GET: EF
         public ActionResult Index()
