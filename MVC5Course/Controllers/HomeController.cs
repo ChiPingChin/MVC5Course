@@ -13,6 +13,11 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        public ActionResult Who()
+        {
+            return View();
+        }
+
         [ActionName("About.aspx")]
         public ActionResult About()
         {
