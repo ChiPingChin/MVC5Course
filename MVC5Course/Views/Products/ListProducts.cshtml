@@ -4,7 +4,38 @@
     ViewBag.Title = "ListProducts";
 }
 
+@if (TempData["Created_Product_Result"] != null)
+{
+    <h1>@TempData["Created_Product_Result"]</h1>
+}
+
+
 <h2>ListProducts</h2>
+
+<div>
+    <form method="post">
+        篩選：
+
+        @*此方式不會 keep 上一頁輸入的值並呈現在 input 中，要自行處理，很麻煩!!*@
+        @*<input type="search" name="q" />*@
+
+        @*表單送出，只要有 Model Binding ，就會有 Model State (會 keep 上一頁輸入的值並填回 input 欄位中)*@
+
+        <br />
+        ProductName : 
+        @Html.TextBox("q")
+        <br />
+        <br />
+        Stock(Min) :
+        @Html.TextBox("s1")
+        <br />
+        <br />
+        Stock(Max) :
+        @Html.TextBox("s2")
+
+        <button>Search</button>
+    </form>
+</div>
 
 <p>
     @Html.ActionLink("Create New", "Create")

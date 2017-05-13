@@ -38,15 +38,30 @@ namespace MVC5Course.Controllers
             //var data = repo.All()  // 在 Controller 中完全看不到 EF 操作(多隔了一層)
             //   .Where(x => x.Active.HasValue && x.Active == Active)
             //   .OrderByDescending(p => p.ProductId).Take(10);
-                        
+
             // 改用 Repository 方式存取
             //var data = repo.All(Active)
             //     .Where(p => p.Active.HasValue && p.Active.Value == Active)
             //      .OrderByDescending(p => p.ProductId).Take(10);
 
+            
+
             var data = repo.GetProduct列表頁所有資料(Active, ShowAll: false);
 
+            // 弱型別資料(從 ACTION 傳過來的資料) - 同宗，以下兩者內部運作完全相同
+            //ViewData["ppp"] = data;
+            //ViewBag.qqq = data;
+
+            // TempData 骨仔裡就是用 Session (讀一次就自動清除)
+            // 通常新增成功後，要跳到另一頁去顯示成功時，就可使用 TempData 傳到下一頁去接值顯示成功
+            //TempData["Msg"] = "Created Successfully";
+
+            // 法一
             return View(data);
+
+            // 法二
+            //ViewData.Model = data;
+            //return View();
         }
 
         // GET: Products/Details/5
@@ -91,8 +106,12 @@ namespace MVC5Course.Controllers
                 repo.Add(product);
                 repo.UnitOfWork.Commit();
 
+                // 寫入建立結果訊息
+                TempData["Created_Product_Result"] = "新增成功!";
+
                 //TempData["Msg"] = "新增成功!!";
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("ListProducts");
             }
 
             //ViewBag.product = product;
@@ -203,13 +222,34 @@ namespace MVC5Course.Controllers
         //    base.Dispose(disposing);
         //}
 
-        public ActionResult ListProducts()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="q">Product Name</param>
+        /// <param name="s1">Stock Min</param>
+        /// <param name="s2">Stock Max</param>
+        /// <returns></returns>
+        public ActionResult ListProducts(string q,int? s1,int? s2)
         {
             //var data = db.Product
             //    .Where(p => p.Active == true)
+
             // 改透過 Repository 服務去存取 DB
-            var data = repo.GetProduct列表頁所有資料(true)
-                .Select(p => new ProductLiteVM
+            var data = repo.GetProduct列表頁所有資料(true);
+
+            // 篩選輸入條件
+            if (!string.IsNullOrEmpty(q) && s1 != null && s2 != null)
+            {
+                data = data.Where(
+                    p => p.ProductName.Contains(q)
+                         && p.Stock >= s1 
+                         && p.Stock <= s2
+                );
+            }
+
+            // 轉為 ViewModel 物件集合
+            ViewData.Model = 
+                data.Select(p => new ProductLiteVM
                 {
                     ProductId= p.ProductId,
                     ProductName = p.ProductName,
@@ -218,7 +258,8 @@ namespace MVC5Course.Controllers
                 })
                 .Take(10);
 
-            return View(data);
+            //return View(data);
+            return View();
         }
 
         public ActionResult CreateProduct()
