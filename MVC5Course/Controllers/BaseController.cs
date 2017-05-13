@@ -18,5 +18,14 @@ namespace MVC5Course.Controllers
         {
             return Content("Hello");
         }
+
+        /// <summary>
+        /// 某個 Action 找不到時(找不到頁面時)，一律倒回首頁，不建議加上此，除非有此需求
+        /// </summary>
+        /// <param name="actionName"></param>
+        protected override void HandleUnknownAction(string actionName)
+        {
+            this.RedirectToAction("Index","Home").ExecuteResult(this.ControllerContext);
+        }
     }
 }
