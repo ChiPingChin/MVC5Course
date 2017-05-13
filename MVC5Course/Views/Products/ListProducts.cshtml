@@ -12,71 +12,86 @@
 
 <h2>ListProducts</h2>
 
-<div>
-    <form method="post">
-        篩選：
 
-        @*此方式不會 keep 上一頁輸入的值並呈現在 input 中，要自行處理，很麻煩!!*@
-        @*<input type="search" name="q" />*@
+<form method="post">
+    篩選：
 
-        @*表單送出，只要有 Model Binding ，就會有 Model State (會 keep 上一頁輸入的值並填回 input 欄位中)*@
+    @*此方式不會 keep 上一頁輸入的值並呈現在 input 中，要自行處理，很麻煩!!*@
+    @*<input type="search" name="q" />*@
 
-        <br />
-        ProductName : 
-        @Html.TextBox("ProductName")
-        <br />
-        <br />
-        Stock(Min) :
-        @Html.TextBox("StockBegin", null, new { size = "10", type = "number" }) 
-        <br />
-        <br />
-        Stock(Max) :
-        @Html.TextBox("StockEnd", null, new { size = "10", type = "number" })
+    @*表單送出，只要有 Model Binding ，就會有 Model State (會 keep 上一頁輸入的值並填回 input 欄位中)*@
 
-        <button>Search</button>
-    </form>
-</div>
+    <br />
+    ProductName :
+    @Html.TextBox("ProductName")
+    <br />
+    <br />
+    Stock(Min) :
+    @Html.TextBox("StockBegin", null, new { size = "10", type = "number" })
+    <br />
+    <br />
+    Stock(Max) :
+    @Html.TextBox("StockEnd", null, new { size = "10", type = "number" })
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Price)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Stock)
-        </th>
-        @*<th></th>*@
-    </tr>
+    <button>Search</button>
+</form>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Stock)
-        </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>*@
-    </tr>
+
+@using (Html.BeginForm("BatchUpdate","Products"))
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stock)
+            </th>
+            @*<th></th>*@
+        </tr>
+
+        @{
+
+            var items = Model.ToArray();
+        }
+
+        @for (int i = 0; i < items.Length; i++)
+        {
+            @Html.HiddenFor(modelItem => items[i].ProductId)
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].ProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => items[i].ProductName)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].Price)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => items[i].Stock)
+                </td>
+                @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>*@
+            </tr>
+        }
+
+    </table>
+
+    <button>送出批次資料</button>
 }
 
-</table>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+

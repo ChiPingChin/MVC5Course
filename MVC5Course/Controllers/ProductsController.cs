@@ -16,7 +16,7 @@ namespace MVC5Course.Controllers
         //private FabricsEntities db = new FabricsEntities();
 
         // 改透過 Repository 服務去存取 DB
-        ProductRepository repo = RepositoryHelper.GetProductRepository();       
+        ProductRepository repo = RepositoryHelper.GetProductRepository();
 
         // GET: Products
         public ActionResult Index(bool Active = true)
@@ -44,7 +44,7 @@ namespace MVC5Course.Controllers
             //     .Where(p => p.Active.HasValue && p.Active.Value == Active)
             //      .OrderByDescending(p => p.ProductId).Take(10);
 
-            
+
 
             var data = repo.GetProduct列表頁所有資料(Active, ShowAll: false);
 
@@ -230,40 +230,63 @@ namespace MVC5Course.Controllers
         /// <param name="s2">Stock Max</param>
         /// <returns></returns>
         public ActionResult ListProducts(ProductListFilterVM productFilter)
-        {
-            //var data = db.Product
-            //    .Where(p => p.Active == true)
+        {            
+            GetProductListBySearch(productFilter);
 
+            //return View(data);
+            return View();
+        }
+
+        public ActionResult BatchUpdate(ProductListFilterVM productFilter,
+            ProductBatchUpdateVM[] items)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in items)
+                {
+                    var prod = db.Product.Find(item.ProductId);
+                    prod.Price = item.Price;
+                    prod.Stock = item.Stock;
+                }
+
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+            }
+
+            /*************************************/
+            GetProductListBySearch(productFilter);
+
+            return View("ListProducts");
+        }
+
+        private void GetProductListBySearch(ProductListFilterVM productFilter)
+        {
             // 改透過 Repository 服務去存取 DB
             var data = repo.GetProduct列表頁所有資料(true);
 
-            if (ModelState.IsValid)
-            {
-                // 篩選輸入條件
-                if (!string.IsNullOrEmpty(productFilter.ProductName))
-                {
-                    data = data.Where(
-                      p => p.ProductName.Contains(productFilter.ProductName));
-                }
 
+            // 篩選輸入條件
+            if (!string.IsNullOrEmpty(productFilter.ProductName))
+            {
                 data = data.Where(
-                       p => p.Stock >= productFilter.StockBegin
-                            && p.Stock <= productFilter.StockEnd);
-            }           
+                  p => p.ProductName.Contains(productFilter.ProductName));
+            }
+
+            data = data.Where(
+                   p => p.Stock >= productFilter.StockBegin
+                        && p.Stock <= productFilter.StockEnd);
+
 
             // 轉為 ViewModel 物件集合
-            ViewData.Model = 
+            ViewData.Model =
                 data.Select(p => new ProductLiteVM
                 {
-                    ProductId= p.ProductId,
+                    ProductId = p.ProductId,
                     ProductName = p.ProductName,
                     Price = p.Price,
                     Stock = p.Stock
                 })
                 .Take(10);
-
-            //return View(data);
-            return View();
         }
 
         public ActionResult CreateProduct()

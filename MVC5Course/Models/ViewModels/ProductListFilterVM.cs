@@ -8,6 +8,13 @@ namespace MVC5Course.Models.ViewModels
 {
     public class ProductListFilterVM : IValidatableObject
     {
+
+        public ProductListFilterVM()
+        {
+            this.StockBegin = 0;
+            this.StockEnd = 99999;
+        }
+
         public string ProductName { get; set; }
 
         public int StockBegin { get; set; }
