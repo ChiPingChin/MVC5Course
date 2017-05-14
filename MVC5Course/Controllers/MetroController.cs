@@ -16,6 +16,12 @@ namespace MVC5Course.Controllers
 
         public ActionResult Tasks()
         {
+            //var a = new {
+            //    id = 1,
+            //    name ="Denny",
+            //    @class = "ASP.NET MVC"   // class 為 C# keyword
+            //};
+
             return View();
         }
     }
