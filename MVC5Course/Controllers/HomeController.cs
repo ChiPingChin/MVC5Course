@@ -13,15 +13,19 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        [SharedViewBag]
         public ActionResult Who()
         {
             return View();
         }
 
         //[ActionName("About.aspx")]
+        // Action Filter Case : 適用場景：寫 Log, 做 Auth, All Shared Common Operations for Actions
+        // Action Filter Case : 可以讓 Controller 變輕，且程式碼只要撰寫一次，即可套用在不同 Action / Controller 上面
+        [SharedViewBag]  
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            //ViewBag.Message = "Your application description page.";
 
             return View();
         }
