@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
 using MVC5Course.Models.ViewModels;
+using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
 
 namespace MVC5Course.Controllers
 {
@@ -20,6 +22,7 @@ namespace MVC5Course.Controllers
         // 改透過 Repository 服務去存取 DB
         ProductRepository repo = RepositoryHelper.GetProductRepository();
 
+        [OutputCache(Duration = 300,Location = System.Web.UI.OutputCacheLocation.ServerAndClient)]
         // GET: Products
         public ActionResult Index(bool Active = true)
         {
@@ -97,6 +100,7 @@ namespace MVC5Course.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error_DbUpdateException")]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
             if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
@@ -185,6 +189,7 @@ namespace MVC5Course.Controllers
             // 先從 DB 取回完整資料欄位值的物件
             var product = repo.Get單筆資料ByProductId(id);
 
+            // Model Binding 完成後，所有資料會放在 ModelState 物件中，然後可以在 Action 和 View 之間傳遞該 ModelState，也會自動綁到前端頁面輸入欄位(靠名稱對應)
             // 在此才做 Model Binding ，只 Binding VIEW 上的欄位資料，只更新有異動的欄位值(把有異動的欄位值更新到 product 物件中)，其他保留 DB 內目前的值
             // 避免預設程式碼會把未更新的欄位塞預設值，更新到 DB 中造成資料錯誤
             if (TryUpdateModel<Product>(product, new string[] { "ProductId","ProductName","Price","Active","Stock" }))  

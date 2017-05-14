@@ -169,6 +169,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActionFilters\LocalOnlyAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -183,7 +184,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="Controllers\SharedViewBagAttribute.cs" />
+    <Compile Include="ActionFilters\SharedViewBagAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -400,6 +401,7 @@
     <Content Include="Views\EF\Details.cshtml" />
     <Content Include="Views\Shared\SuccessRedirect.cshtml" />
     <Content Include="Views\Clients\BatchUpdate.cshtml" />
+    <Content Include="Views\Shared\Error_DbUpdateException.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

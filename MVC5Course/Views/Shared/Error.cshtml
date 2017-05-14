@@ -2,8 +2,23 @@
 
 @{
     ViewBag.Title = "Error";
+
+    var ex = Model.Exception as System.Data.Entity.Infrastructure.DbUpdateException;
 }
 
-<h1 class="text-danger">Error.</h1>
+@*顯示錯誤發生的 Controller and Action *@
+<h1 class="text-danger">Error. @Model.ControllerName / @Model.ActionName</h1>
 <h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@*顯示簡短錯誤訊息*@
+<pre>@Model.Exception.Message</pre>
+
+@*顯示完整錯誤訊息*@
+<pre>@Model.Exception.ToString()</pre> 
+
+@*顯示特定錯誤訊息*@
+<pre>@ex.Message</pre>
+
+@*顯示往內深入幾層的錯誤訊息*@
+<pre>@ex.InnerException.InnerException.Message</pre>
 

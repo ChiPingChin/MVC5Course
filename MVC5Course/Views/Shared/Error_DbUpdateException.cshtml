@@ -1,0 +1,19 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+
+    var ex = Model.Exception as System.Data.Entity.Infrastructure.DbUpdateException;
+}
+
+<h1 class="text-danger">傳入 SQL Server 的查詢與法錯誤</h1>
+ <h2 class="text-danger">
+       @ex.Message   
+</h2>
+
+
+ <h3 class="text-danger">
+       @ex.InnerException.InnerException.Message    
+</h3>
+ 
+<pre>@ex.ToString()</pre>
