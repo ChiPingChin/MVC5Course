@@ -10,6 +10,11 @@
     <h1>@TempData["Created_Product_Result"]</h1>
 }
 
+@*如果是 Ajax , 就不套 Layout*@
+@*@if (IsAjax) 
+{
+    Layout = "";
+}*@
 
 <h2>ListProducts</h2>
 
