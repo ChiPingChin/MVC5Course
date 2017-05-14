@@ -1,0 +1,51 @@
+﻿@model IEnumerable<MVC5Course.Models.Order>
+@*View 的資料來源可能是 Controller/Action，也可能是另一個 View
+=> 寫 View 時就不需要考慮這個 View 會被誰使用，就專心寫好這個 View 即可，達到關注點分離*@
+
+@{
+   ViewBag.Title = "Index";    
+   Layout = "";
+}
+
+<h2>Order Detail</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OrderStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Client.FirstName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Client.FirstName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.OrderId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.OrderId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderId })
+        </td>
+    </tr>
+}
+
+</table>
