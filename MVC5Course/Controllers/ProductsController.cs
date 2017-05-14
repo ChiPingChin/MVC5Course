@@ -11,6 +11,8 @@ using MVC5Course.Models.ViewModels;
 
 namespace MVC5Course.Controllers
 {
+    //[Authorize]
+    //[RequireHttps]  // Use SSL
     public class ProductsController : BaseController
     {
         //private FabricsEntities db = new FabricsEntities();
@@ -144,20 +146,50 @@ namespace MVC5Course.Controllers
             return View(product);
         }
 
+        //// POST: Products/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        ///// <summary>
+        ///// 預設程式碼會把未更新(未 Binding)的欄位塞預設值(只 Binding 指定的欄位值或 View 上有填的欄位值，其他皆為用預設值)，更新到 DB 中造成資料錯誤
+        ///// </summary>
+        ///// <param name="product"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        ////public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        //public ActionResult Edit(Product product)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //db.Entry(product).State = EntityState.Modified;
+        //        //db.SaveChanges();
+
+        //        // 改透過 Repository 服務去存取 DB
+        //        repo.Update(product);
+        //        repo.UnitOfWork.Commit();
+
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(product);
+        //}
+
         // POST: Products/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // 延遲驗證，在 Action 中才做 Model Binding，事先不做 Model Binding (因為尚未 Binding , 所以無 ModelState)
+        // 避免預設程式碼會把未更新(未 Binding)的欄位塞預設值(只 Binding 指定的欄位值或 View 上有填的欄位值)，更新到 DB 中造成資料錯誤
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
+        public ActionResult Edit(int id, FormCollection form)
         {
-            if (ModelState.IsValid)
-            {
-                //db.Entry(product).State = EntityState.Modified;
-                //db.SaveChanges();
+            // 先從 DB 取回完整資料欄位值的物件
+            var product = repo.Get單筆資料ByProductId(id);
 
+            // 在此才做 Model Binding ，只 Binding VIEW 上的欄位資料，只更新有異動的欄位值(把有異動的欄位值更新到 product 物件中)，其他保留 DB 內目前的值
+            // 避免預設程式碼會把未更新的欄位塞預設值，更新到 DB 中造成資料錯誤
+            if (TryUpdateModel<Product>(product, new string[] { "ProductId","ProductName","Price","Active","Stock" }))  
+            {           
                 // 改透過 Repository 服務去存取 DB
-                repo.Update(product);
                 repo.UnitOfWork.Commit();
 
                 return RedirectToAction("Index");
