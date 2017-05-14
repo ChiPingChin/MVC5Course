@@ -10,6 +10,7 @@ using MVC5Course.Models;
 using MVC5Course.Models.ViewModels;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Validation;
 
 namespace MVC5Course.Controllers
 {
@@ -101,12 +102,13 @@ namespace MVC5Course.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [HandleError(ExceptionType = typeof(DbUpdateException), View = "Error_DbUpdateException")]
+        //[HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
-            {
+            //if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
+            //{
                 //db.Product.Add(product);
-                //db.SaveChanges();
+                //db.SaveChanges();                
 
                 // 改透過 Repository 服務去存取 DB
                 repo.Add(product);
@@ -118,7 +120,7 @@ namespace MVC5Course.Controllers
                 //TempData["Msg"] = "新增成功!!";
                 //return RedirectToAction("Index");
                 return RedirectToAction("ListProducts");
-            }
+            //}
 
             //ViewBag.product = product;
 

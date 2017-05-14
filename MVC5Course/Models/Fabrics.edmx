@@ -64,7 +64,7 @@
           <Property Name="Price" Type="smallmoney" />
           <Property Name="Active" Type="bit" />
           <Property Name="Stock" Type="numeric" Precision="18" Scale="3" />
-          <Property Name="Is刪除" Type="bit" Nullable="false" />
+          <Property Name="Is刪除" Type="bit" Nullable="false" StoreGeneratedPattern="Computed" />
           <Property Name="CreatedOn" Type="datetime" StoreGeneratedPattern="None" />
         </EntityType>
         <Association Name="FK_Client_Occupation">
@@ -210,7 +210,7 @@
           <Property Name="Stock" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="OrderLine" Relationship="Self.fk_OrderLine_ProductId" FromRole="Product" ToRole="OrderLine" />
           <Property Name="CreatedOn" Type="DateTime" Precision="3" annotation:StoreGeneratedPattern="None" />
-          <Property Name="Is刪除" Type="Boolean" Nullable="false" />
+          <Property Name="Is刪除" Type="Boolean" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
         </EntityType>
         <Association Name="FK_Client_Occupation">
           <End Role="Occupation" Type="Self.Occupation" Multiplicity="0..1" />
