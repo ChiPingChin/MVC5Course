@@ -1,0 +1,35 @@
+﻿@model int[]
+@{
+    /* 不顯示 Layout.cshtml (清空)*/
+    Layout = "";
+}
+
+@foreach (var i in Model)
+{
+    @i
+}
+
+@foreach (var j in Model)
+{
+    @(j + " ")
+}
+
+<ul>
+@foreach (var k in Model)
+{
+  <text></text>@Html.Raw("<li>");<text>@k</text>@Html.Raw("</li>");
+  <text></text>
+}
+</ul>
+
+
+<ul>
+@foreach (var k in Model)
+{       
+  <li>@k</li>
+}
+</ul>
+
+
+
+@@Will_Huang

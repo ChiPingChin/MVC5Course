@@ -1,0 +1,38 @@
+﻿@{ 
+    Layout = "";
+    ViewBag.TEXT = "<strong style='color: red;'>123</strong>";
+}
+
+@*Razor 自動幫你編碼，以策安全*@
+@ViewBag.TEXT
+
+<hr />
+
+@*指定不要幫忙自動編碼，直接執行輸出 HTML，較危險*@
+@Html.Raw(ViewBag.TEXT)
+
+<hr />
+
+@DateTime.Now
+
+@(1+2)
+
+<hr>
+
+@if(ViewBag.IsEnabled != null && ViewBag.IsEnabled)
+{
+    @:啟用
+    <span>Enabled</span>
+    <text>Active</text>
+}
+else
+{
+    @:停用
+    <span>Disabled</span>
+    <text>Inactive</text>
+}
+
+<hr>
+denny.chin@gmail.com
+<hr>
+TEXT@(ViewBag.IsEnabled)AAA

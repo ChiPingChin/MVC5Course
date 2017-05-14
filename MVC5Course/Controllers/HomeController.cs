@@ -93,5 +93,17 @@ namespace MVC5Course.Controllers
             db.Configuration.LazyLoadingEnabled = false;
             return Json(db.Product.Take(5), JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult VT()
+        {
+            ViewBag.IsEnabled = true;
+            return View();
+        }
+
+        public ActionResult RazorTest()
+        {
+            int[] data = { 1,2,3,4,5};
+            return View(data);
+        }
     }
 }

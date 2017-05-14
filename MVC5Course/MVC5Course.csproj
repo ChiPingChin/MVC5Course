@@ -403,6 +403,8 @@
     <Content Include="Views\Clients\BatchUpdate.cshtml" />
     <Content Include="Views\Shared\Error_DbUpdateException.cshtml" />
     <Content Include="Views\Shared\Error_DbEntityValidationException.cshtml" />
+    <Content Include="Views\Home\VT.cshtml" />
+    <Content Include="Views\Home\RazorTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
