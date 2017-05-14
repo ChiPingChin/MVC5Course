@@ -105,8 +105,8 @@ namespace MVC5Course.Controllers
         //[HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
         public ActionResult Create([Bind(Include = "ProductId,ProductName,Price,Active,Stock")] Product product)
         {
-            //if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
-            //{
+            if (ModelState.IsValid) // 取得驗證結果(綜合驗證結果)，如果正確，繼續下去做新增
+            {
                 //db.Product.Add(product);
                 //db.SaveChanges();                
 
@@ -120,7 +120,7 @@ namespace MVC5Course.Controllers
                 //TempData["Msg"] = "新增成功!!";
                 //return RedirectToAction("Index");
                 return RedirectToAction("ListProducts");
-            //}
+            }
 
             //ViewBag.product = product;
 
