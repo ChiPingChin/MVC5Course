@@ -61,9 +61,10 @@
             <div class="col-md-10">
                 @*@Html.EditorFor(model => model.CreditRating, new { htmlAttributes = new { @class = "form-control" } })*@
 
-                @*所有選項值：由 Action 中的 ViewData["CreditRating"] 或 ViewBag.CreditRating 而來(在此不給，傳入 null ,即是 SelectList 型別物件)
+                @*所有選項值：由 Action 中的 ViewData["CreditRating"] 或 ViewBag.CreditRating 而來，會自動抓 (在此不給，傳入 null ,即是 SelectList 型別物件)
                   選定哪一個值：一進入此頁面時，被選定哪一個值(選中的值)，則是由 ViewData.Model(就是 Model) 而來或是由 ModelState(由 Model Binding 而來，優先權高) 而來
                   因為第一次進入 Edit 頁面，必定尚未做 Model Binding (所以 ModelState 中沒有值)，決定選中的值會來自於 ViewData.Model(就是 Model)，透過在 View 中 return View(client) 傳入
+                  @Html.Password 除外，不會抓 ModelState 或 ViewData.Model 的值做顯示
                 *@
                 @Html.DropDownListFor(model => model.CreditRating, null, new { htmlAttributes = new { @class = "form-control" } })
 
