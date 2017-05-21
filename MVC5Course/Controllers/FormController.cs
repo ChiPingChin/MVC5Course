@@ -24,11 +24,11 @@ namespace MVC5Course.Controllers
         {
             // 此時 Model Binding 只有 Bind id 一個欄位值到 ModelState 中，ViewData.Model 中尚無資料
 
-            // 作法一 (餵資料給 ViewData.Model ，ViewData.Model 會傳到 View 最上方宣告的型別物件中，自動轉型後綁定個欄位在 View 中顯示，轉型失敗會丟出錯誤)
+            // 作法一：詳細寫法 (餵資料給 ViewData.Model ，ViewData.Model 會傳到 View 最上方宣告的型別物件中，自動轉型後綁定個欄位在 View 中顯示，轉型失敗會丟出錯誤)
             // ViewData.Model = db.Product.Find(id);
             // return View();
 
-            // 作法二 (效果同作法一)
+            // 作法二：精簡寫法 (效果同作法一，預設會將傳入 View 的 Data 放在 ViewData.Model 預設屬性中，所以簡寫成以下，不用特別寫 ViewData.Model = db.Product.Find(id); )
             return View(db.Product.Find(id));
         }
 
