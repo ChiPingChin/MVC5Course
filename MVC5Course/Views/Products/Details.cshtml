@@ -2,6 +2,12 @@
 
 @{
     ViewBag.Title = "Details";
+
+    // Ajax 呼叫時不顯示 Layout，只顯示內容部分
+    if (IsAjax)
+    {
+        Layout = "";
+    }
 }
 
 <h2>Details</h2>

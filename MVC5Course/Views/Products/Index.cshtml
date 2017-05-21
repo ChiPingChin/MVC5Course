@@ -50,11 +50,20 @@
             @Html.DisplayFor(modelItem => item.Stock)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }) |
+
+            @*@Html.ActionLink("Details", "Details", new { id=item.ProductId }) |*@
+            @*改用 Ajax 呼叫，並將資料結果顯示在此頁下方*@
+            @Ajax.ActionLink("Details", "Details", new { id = item.ProductId }, new AjaxOptions() { UpdateTargetId = "Details" }) |
+
+            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
         </td>
     </tr>
 }
 
 </table>
+
+
+<div id="Details">   
+   
+</div> 
