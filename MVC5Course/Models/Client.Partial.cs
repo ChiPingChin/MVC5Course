@@ -24,8 +24,11 @@ namespace MVC5Course.Models
         public string LastName { get; set; }
         
         [StringLength(1, ErrorMessage="欄位長度不得大於 1 個字元")]
+        [UIHint("Gender")] // 套用 View Template : Gender.cshtml 去做客製的顯示
         public string Gender { get; set; }
         public Nullable<System.DateTime> DateOfBirth { get; set; }
+
+        [UIHint("CreditRating")]  // 套用 View Template : CreditRating.cshtml 去做客製的顯示
         public Nullable<double> CreditRating { get; set; }
         
         [StringLength(7, ErrorMessage="欄位長度不得大於 7 個字元")]

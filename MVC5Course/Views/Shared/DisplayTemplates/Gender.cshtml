@@ -1,0 +1,14 @@
+﻿@model string
+
+@switch (Model)
+{
+    case "M":
+        @("👱男性")
+        break;
+    case "F":
+        @("👩女性")
+        break;
+    default:
+        @("N/A")
+        break;
+}
