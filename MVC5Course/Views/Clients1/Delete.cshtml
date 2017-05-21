@@ -10,138 +10,151 @@
 <div>
     <h4>Client</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+    @*使用 MVC 的範本，把某個 Model 的值轉成 Html 輸出*@
+    @Html.DisplayForModel()
+    @*@Html.DisplayFor(m=>m)*@
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MiddleName)
-        </dt>
+    @*自訂的 Template :
+        於 View -> Shared 下面建立 DisplayTemplates 和 EditorTemplates 兩個子資料夾
+        建立後於 DisplayTemplates 下面新增 View，Model 選 MVC5Course.Models.Client
+        然後把下面註解的標籤貼到新的 View 上即可呈現自訂的 View 內容(顯示 Model 內容值)
+        最後在此頁上方加上 @Html.DisplayForModel() 即可顯示
+    *@
 
-        <dd>
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
+    @*<dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.MiddleName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Gender)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.CreditRating)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Gender)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.CreditRating)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.XCode)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateOfBirth)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.XCode)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.CreditRating)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.TelephoneNumber)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CreditRating)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.TelephoneNumber)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.XCode)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Street1)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.XCode)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Street1)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.TelephoneNumber)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Street2)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.TelephoneNumber)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Street2)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Street1)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Street1)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Street2)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ZipCode)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Street2)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.ZipCode)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ZipCode)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.ZipCode)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Longitude)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Longitude)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Latitude)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Occupation.OccupationName)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Latitude)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Occupation.OccupationName)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Notes)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.Notes)
+            </dd>
 
-    @using (Html.BeginForm()) {
+            <dt>
+                @Html.DisplayNameFor(model => model.Occupation.OccupationName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Occupation.OccupationName)
+            </dd>
+
+        </dl>*@
+
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
