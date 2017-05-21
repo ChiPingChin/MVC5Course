@@ -78,5 +78,9 @@ namespace MVC5Course.Models
         [DisplayName("商品庫存")]
         public Nullable<decimal> Stock { get; set; }
 
+        [DataType(DataType.Date)] /*會決定 View 輸出的型態為 input type="date"，只有 Chrome 支援，且必須搭配以下設定 */
+        [DisplayFormat(DataFormatString="{0:yyyy-MM-dd}",ApplyFormatInEditMode =true)] // 注意：Chrome 只接受 yyyy-MM-dd 格式日期資料，不可改用斜線 /
+        public DateTime CreatedOn { get; set; }
+
     }
 }
