@@ -12,7 +12,8 @@ using System.Data.Entity.Validation;
 
 namespace MVC5Course.Controllers
 {
-    [HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
+    //[HandleError(ExceptionType = typeof(DbEntityValidationException), View = "Error_DbEntityValidationException")]
+    [HandleError(ExceptionType = typeof(Exception), View = "Error")]
     public abstract class BaseController : Controller
     {
         protected FabricsEntities db = new FabricsEntities();

@@ -6,9 +6,19 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
+@using (Html.BeginForm("Index", "Clients1", FormMethod.Get))
+{
+    <text>
+        @*@Html.ActionLink("Create New", "Create")*@
+        篩選：
+        @Html.DropDownList("CreditRatingFilter", "請選擇 CreditRating")
+        @Html.DropDownList("LastNameFilter", "請選擇 LastName")
+        <input type="submit" value="執行篩選" />
+    </text>
+}
+
+
 <table class="table">
     <tr>
         <th>
@@ -29,40 +39,38 @@
         <th>
             @Html.DisplayNameFor(model => model.CreditRating)
         </th>
-       
+
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MiddleName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateOfBirth)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreditRating)
-        </td>
-        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ClientId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ClientId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ClientId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreditRating)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClientId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ClientId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ClientId })
+            </td>
+        </tr>
+    }
 
 </table>
-
-
-

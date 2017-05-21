@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Error";
 
-    var ex = Model.Exception as System.Data.Entity.Infrastructure.DbUpdateException;
+    //var ex = Model.Exception as System.Data.Entity.Infrastructure.DbUpdateException;
 }
 
 @*顯示錯誤發生的 Controller and Action *@
@@ -17,8 +17,8 @@
 <pre>@Model.Exception.ToString()</pre> 
 
 @*顯示特定錯誤訊息*@
-<pre>@ex.Message</pre>
+<pre>@Model.Exception.Message</pre>
 
 @*顯示往內深入幾層的錯誤訊息*@
-<pre>@ex.InnerException.InnerException.Message</pre>
+@*<pre>@Model.Exception.InnerException.InnerException.Message</pre>*@
 

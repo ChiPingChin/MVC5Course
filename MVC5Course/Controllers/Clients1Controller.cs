@@ -15,9 +15,41 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Clients1
-        public ActionResult Index()
+        public ActionResult Index(int CreditRatingFilter = -1, string LastNameFilter ="")
         {
-            var client = db.Client.Include(c => c.Occupation);
+            // 1. 產生 DropdownList CreditRating 的候選屬性值
+            // 從 DB 撈出資料，當作選項清單
+            var ratings = (from p in db.Client                          
+                           select p.CreditRating
+                           ).Distinct().OrderBy(p => p).ToList();
+
+            // 將選項清單餵給 ViewBag.CreditRatingFilter 或是 ViewData["CreditRatingFilter"]
+            ViewBag.CreditRatingFilter = new SelectList(ratings);
+
+
+            // 2. 產生 DropdownList LastName 的候選屬性值
+            // 從 DB 撈出資料，當作選項清單
+            var lastName = (from p in db.Client
+                           select p.LastName
+                           ).Distinct().OrderBy(p => p).ToList();
+
+            // 將選項清單餵給 ViewBag.LastName 或是 ViewData["LastName"]
+            ViewBag.LastNameFilter = new SelectList(lastName);
+
+            // var client = db.Client.Include(c => c.Occupation);
+            var client = db.Client.AsQueryable();
+
+            // 執行篩選作業
+            if (CreditRatingFilter >= 0)
+            {
+                client = client.Where(c => c.CreditRating == CreditRatingFilter);
+            }
+
+            if (!string.IsNullOrEmpty(LastNameFilter))
+            {
+                client = client.Where(c => c.LastName == LastNameFilter);
+            }
+            
             return View(client.Take(10));
         }
 
