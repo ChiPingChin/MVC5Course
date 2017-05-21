@@ -9,7 +9,7 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Client</h4>
         <hr />
@@ -59,7 +59,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreditRating, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CreditRating, new { htmlAttributes = new { @class = "form-control" } })
+                @*@Html.EditorFor(model => model.CreditRating, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                @*所有選項值：由 Action 中的 ViewData["CreditRating"] 或 ViewBag.CreditRating 而來(在此不給，傳入 null ,即是 SelectList 型別物件)
+                  選定哪一個值：一進入此頁面時，被選定哪一個值(選中的值)，則是由 ViewData.Model(就是 Model) 而來或是由 ModelState(由 Model Binding 而來，優先權高) 而來 *@
+                @Html.DropDownListFor(model => model.CreditRating, null, new { htmlAttributes = new { @class = "form-control" } })
+
+                @*如果 ViewData.Model 與 ModelState都無值，但必須要給預設值的方式如下，給第二個參數當作預設值，或是抓同名的 ViewData["FirstName"] 的值當做預設值 *@
+                @*@Html.TextBox("FirstName", "預設值")*@
+
+                @*@Html.DropDownList("CreditRating", new List<SelectListItem>() {
+                                                           new SelectListItem() { Text="1", Value="1" },
+                                                           new SelectListItem() { Text="2", Value="2" },
+                                                           new SelectListItem() { Text="3", Value="3" },
+                                                           new SelectListItem() { Text="4", Value="4" },
+                                                           new SelectListItem() { Text="5", Value="5" },
+                                                           new SelectListItem() { Text="6", Value="6" },
+                                                           new SelectListItem() { Text="7", Value="7" },
+                                                           new SelectListItem() { Text="8", Value="8" },
+                                                           new SelectListItem() { Text="9", Value="9" },
+                                                           new SelectListItem() { Text="10", Value="10" }
+                    })*@
+
                 @Html.ValidationMessageFor(model => model.CreditRating, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -105,8 +105,15 @@ namespace MVC5Course.Controllers
             {
                 return HttpNotFound();
             }
+
+            // 產生 CreditRating 下拉式選單選項值，塞入 ViewBag or ViewData 中
+            var items = new int[] { 0,1,2,3,4,5,6,7,8,9};
+            ViewBag.CreditRating = new SelectList(items);
+            // 或是
+            // ViewData["CreditRating"] = new SelectList(items);
+
             ViewBag.OccupationId = new SelectList(db.Occupation, "OccupationId", "OccupationName", client.OccupationId);
-            return View(client);
+            return View(client);  // 丟回 Model
         }
 
         // POST: Clients1/Edit/5
