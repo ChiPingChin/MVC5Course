@@ -6,10 +6,13 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
+    // AntiForgeryToken
+    // 產生隱藏欄位 與 cookie 在 client 端，並也同時在 server 上產生一組亂碼存在 session 中，當 client 送出表單時會把 隱藏欄位 與 cookie 的資料送給 Server Action
+    // Server 會去比對驗證其是否和 session 中的亂碼符合，若不符合直接擋掉，不會執行 Action
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Client</h4>
         <hr />

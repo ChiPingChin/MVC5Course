@@ -1,7 +1,17 @@
-﻿@model IEnumerable<MVC5Course.Models.Client>
+﻿@using PagedList.Mvc;
+@using PagedList;
+
+@model IEnumerable<MVC5Course.Models.Client>
 
 @{
     ViewBag.Title = "Index";
+    var data = Model as IPagedList;
+
+    // 如果是 Ajax 呼叫，則不套用 Layout
+    if (IsAjax)
+    {
+        Layout = "";
+    }
 }
 
 <h2>Index</h2>
@@ -74,3 +84,25 @@
     }
 
 </table>
+
+@*先產生好各頁超連結*@
+@Html.PagedListPager(
+    Model as IPagedList,
+    (p) => Url.Action("Index",
+    new {
+        pageNo = p
+    }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing("#Main")    // 增加 Ajax 換頁功能(加一個參數即可做到)
+    )
+
+
+@*先產生好各頁超連結 (外加傳入其他參數值)*@
+@*@Html.PagedListPager(
+    Model as IPagedList,
+    (p) => Url.Action("Index",
+    new
+    {
+        pageNo = p,
+        CreditRatingFilter = Html.Value("CreditRatingFilter"),
+        LastNameFilter = Html.Value("LastNameFilter")
+    }))*@

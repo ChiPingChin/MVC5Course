@@ -26,6 +26,9 @@ namespace MVC5Course
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // 啟用最佳化功能 (只會載入 min.js -> 找不到則找 js 後自動做 minify 作業) -> 不好 Debug
+            // BundleTable.EnableOptimizations = true;
         }
     }
 }

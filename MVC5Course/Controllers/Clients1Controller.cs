@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVC5Course.Models;
+using PagedList.Mvc;
+using PagedList;
 
 namespace MVC5Course.Controllers
 {
@@ -15,11 +17,11 @@ namespace MVC5Course.Controllers
         private FabricsEntities db = new FabricsEntities();
 
         // GET: Clients1
-        public ActionResult Index(int CreditRatingFilter = -1, string LastNameFilter ="")
+        public ActionResult Index(int CreditRatingFilter = -1, string LastNameFilter = "", int pageNo = 1)
         {
             // 1. 產生 DropdownList CreditRating 的候選屬性值
             // 從 DB 撈出資料，當作選項清單
-            var ratings = (from p in db.Client                          
+            var ratings = (from p in db.Client
                            select p.CreditRating
                            ).Distinct().OrderBy(p => p).ToList();
 
@@ -30,7 +32,7 @@ namespace MVC5Course.Controllers
             // 2. 產生 DropdownList LastName 的候選屬性值
             // 從 DB 撈出資料，當作選項清單
             var lastName = (from p in db.Client
-                           select p.LastName
+                            select p.LastName
                            ).Distinct().OrderBy(p => p).ToList();
 
             // 將選項清單餵給 ViewBag.LastName 或是 ViewData["LastName"]
@@ -49,9 +51,16 @@ namespace MVC5Course.Controllers
             {
                 client = client.Where(c => c.LastName == LastNameFilter);
             }
-            
-            return View(client.Take(10));
+
+            //return View(client.Take(10));
+
+            // 改加上分頁功能
+            int pageSixe = 10;
+            ViewData.Model = client.OrderByDescending(p => p.ClientId).ToPagedList(pageNo, pageSixe);
+
+            return View();
         }
+       
 
         // GET: Clients1/Details/5
         public ActionResult Details(int? id)

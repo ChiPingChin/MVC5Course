@@ -54,7 +54,7 @@
 
             @*@Html.ActionLink("Details", "Details", new { id=item.ProductId }) |*@
             @*改用 Ajax 呼叫，並將資料結果顯示在此頁下方*@
-            @Ajax.ActionLink("Details", "Details", new { id = item.ProductId }, new AjaxOptions() { UpdateTargetId = "Details" }) |
+            @Ajax.ActionLink("Details", "Details", new { id = item.ProductId }, new AjaxOptions() { UpdateTargetId = "Details" , Confirm="確定要載入嗎" }) |
 
             @Html.ActionLink("Delete", "Delete", new { id = item.ProductId })
         </td>
