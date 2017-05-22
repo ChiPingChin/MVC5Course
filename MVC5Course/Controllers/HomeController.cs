@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -15,6 +16,34 @@ namespace MVC5Course.Controllers
 
         [SharedViewBag]
         public ActionResult Who()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                if (file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                    var path = Path.Combine(Server.MapPath("~/FileUploads"),fileName); 
+
+                    /*TODO: An exception of type 'System.UnauthorizedAccessException' occurred in mscorlib.dll but was not handled in user code
+                            Additional information: 拒絕存取路徑 'D:\Tech_Documents\Course\ASP_NET_MVC_Project\MVC5Course\FileUploads'。*/
+                    file.SaveAs(path);  
+
+                    TempData["FileUploadResult"] = "上傳檔案成功!";
+                }
+                TempData["FileUploadResult"] = "上傳檔案失敗 - 無檔案!";
+            }
+            
+            return RedirectToAction("FileUploadResult");
+        }
+
+
+        public ActionResult FileUploadResult()
         {
             return View();
         }

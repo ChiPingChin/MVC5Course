@@ -472,6 +472,7 @@
     <Content Include="Views\Products1\Details.cshtml" />
     <Content Include="Views\Products1\Edit.cshtml" />
     <Content Include="Views\Products1\Index.cshtml" />
+    <Content Include="Views\Home\FileUploadResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -501,6 +502,7 @@
     <Folder Include="CodeTemplates\ODataControllerWithActions\" />
     <Folder Include="CodeTemplates\ODataControllerWithContext\" />
     <Folder Include="css\" />
+    <Folder Include="FileUploads\" />
     <Folder Include="font\" />
     <Folder Include="img\" />
     <Folder Include="js\" />
