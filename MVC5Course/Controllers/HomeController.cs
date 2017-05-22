@@ -28,27 +28,18 @@ namespace MVC5Course.Controllers
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
+            //檢查是否有選擇檔案
             if (file != null)
             {
+                //檢查檔案大小要限制也可以在這裡做
                 if (file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
                     var path = Path.Combine(Server.MapPath("~/FileUploads"),fileName); 
 
                     file.SaveAs(path);  
-
-                    TempData["FileUploadResult"] = "上傳檔案成功!";
-                }
-                else
-                {
-                    TempData["FileUploadResult"] = "上傳檔案失敗 - 檔案大小為0!";
-                }
-                
-            }
-            else
-            {
-                TempData["FileUploadResult"] = "上傳檔案失敗 - 無檔案!";
-            }
+                }                
+            }         
             
             return RedirectToAction("FileUploadResult");
         }
@@ -61,6 +52,7 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
+             
 
         //[ActionName("About.aspx")]
         // Action Filter Case : 適用場景：寫 Log, 做 Auth, All Shared Common Operations for Actions
