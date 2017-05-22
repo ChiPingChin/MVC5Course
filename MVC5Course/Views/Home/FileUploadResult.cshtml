@@ -1,9 +1,10 @@
 ﻿
 @{
     ViewBag.Title = "FileUploadResult";
+    var resultMsg = @TempData["FileUploadResult"];
 }
 
-<h2>File Upload Result</h2>
+<h2>File Upload Result : @resultMsg </h2>
 
-@TempData["FileUploadResult"]
+
 

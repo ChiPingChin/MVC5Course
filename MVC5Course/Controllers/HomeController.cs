@@ -39,6 +39,14 @@ namespace MVC5Course.Controllers
 
                     TempData["FileUploadResult"] = "上傳檔案成功!";
                 }
+                else
+                {
+                    TempData["FileUploadResult"] = "上傳檔案失敗 - 檔案大小為0!";
+                }
+                
+            }
+            else
+            {
                 TempData["FileUploadResult"] = "上傳檔案失敗 - 無檔案!";
             }
             
