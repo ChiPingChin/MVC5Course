@@ -20,6 +20,11 @@ namespace MVC5Course.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 檔案上傳作業
+        /// </summary>
+        /// <param name="file">參數名稱要和前端 View 的 input name 相同，才能正常做 Data Binding</param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Upload(HttpPostedFileBase file)
         {
@@ -30,8 +35,6 @@ namespace MVC5Course.Controllers
                     var fileName = Path.GetFileName(file.FileName);
                     var path = Path.Combine(Server.MapPath("~/FileUploads"),fileName); 
 
-                    /*TODO: An exception of type 'System.UnauthorizedAccessException' occurred in mscorlib.dll but was not handled in user code
-                            Additional information: 拒絕存取路徑 'D:\Tech_Documents\Course\ASP_NET_MVC_Project\MVC5Course\FileUploads'。*/
                     file.SaveAs(path);  
 
                     TempData["FileUploadResult"] = "上傳檔案成功!";
@@ -42,7 +45,10 @@ namespace MVC5Course.Controllers
             return RedirectToAction("FileUploadResult");
         }
 
-
+        /// <summary>
+        /// 檔案上傳結果顯示
+        /// </summary>
+        /// <returns></returns>
         public ActionResult FileUploadResult()
         {
             return View();
