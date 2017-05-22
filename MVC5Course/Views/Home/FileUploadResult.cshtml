@@ -1,10 +1,15 @@
 ﻿
 @{
-    ViewBag.Title = "FileUploadResult";
-    var resultMsg = @TempData["FileUploadResult"];
+    ViewBag.Title = "File Upload Result";
 }
 
-<h2>File Upload Result : @resultMsg </h2>
+<h2>@ViewBag.Title</h2>
+
+@*如果有訊息，則顯示出來*@
+@if (ViewBag.ResultMsg != null)
+{
+    @Html.Label("info",(string)ViewBag.ResultMsg, new { @class="text-info"})
+}
 
 
 

@@ -35,13 +35,24 @@ namespace MVC5Course.Controllers
                 if (file.ContentLength > 0)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    var path = Path.Combine(Server.MapPath("~/FileUploads"),fileName); 
+                    var path = Path.Combine(Server.MapPath("~/FileUploads"), fileName);
 
-                    file.SaveAs(path);  
-                }                
-            }         
-            
-            return RedirectToAction("FileUploadResult");
+                    file.SaveAs(path);
+
+                    // 若成功，將結果訊息存放到 TempData 準備轉到另一頁顯示訊息
+                    // http://ithelp.ithome.com.tw/articles/10159173
+                    TempData["FileUploadResult"] = "檔案上傳成功!";
+
+                    // 轉導向到另一頁面並顯示成功訊息
+                    return RedirectToAction("FileUploadResult");
+                }
+            }
+
+            // 若失敗，將結果訊息存放到 TempData 準備轉到另一頁顯示訊息
+            TempData["FileUploadResult"] = "檔案上傳失敗，請確認!";
+
+            // 若失敗，回到原來頁面
+            return View(file);
         }
 
         /// <summary>
@@ -50,6 +61,8 @@ namespace MVC5Course.Controllers
         /// <returns></returns>
         public ActionResult FileUploadResult()
         {
+            // 接收轉導向的成功訊息，準備顯示在 View
+            ViewBag.ResultMsg = TempData["FileUploadResult"];
             return View();
         }
 
@@ -79,7 +92,7 @@ namespace MVC5Course.Controllers
             string fileName = Path.GetFileName(filePath);
 
             // 讀成串流
-            Stream iStream = new FileStream(filePath,FileMode.Open, FileAccess.Read, FileShare.Read);
+            Stream iStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             // 回傳出檔案
             return File(iStream, fileType, fileName);
@@ -89,11 +102,11 @@ namespace MVC5Course.Controllers
         //[ActionName("About.aspx")]
         // Action Filter Case : 適用場景：寫 Log, 做 Auth, All Shared Common Operations for Actions
         // Action Filter Case : 可以讓 Controller 變輕，且程式碼只要撰寫一次，即可套用在不同 Action / Controller 上面
-        [SharedViewBag]  
+        [SharedViewBag]
         public ActionResult About()
         {
             //ViewBag.Message = "Your application description page.";
-            
+
             throw new ArgumentException("Error Handled!");
 
             return View();
@@ -110,10 +123,10 @@ namespace MVC5Course.Controllers
             else
             {
                 return View("About");
-            }            
+            }
         }
 
-        
+
         //public String SomeAction()
         public ActionResult SomeAction()
         {
@@ -124,7 +137,7 @@ namespace MVC5Course.Controllers
 
             // 改架構(不要用 Content 來回應內容，改用 PartialView 來回應)，交由 View 去做顯示(JS 寫在 View 中做顯示處理)，
             //       建立一個  PartialView (在 Shared 目錄下)，裡面放此 JS 程式碼(交給 View 處理顯示)，就可以全站共用，以後只改一個地方即可，容易維護
-            return PartialView("SuccessRedirect","/");
+            return PartialView("SuccessRedirect", "/");
         }
 
         /// <summary>
@@ -169,7 +182,7 @@ namespace MVC5Course.Controllers
 
         public ActionResult RazorTest()
         {
-            int[] data = { 1,2,3,4,5};
+            int[] data = { 1, 2, 3, 4, 5 };
             return View(data);
         }
     }
