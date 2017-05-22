@@ -9,6 +9,16 @@
     <input type="submit" />
 }
 
+<hr>
+
+<div>
+    <a href="@Url.Action("DownloadFile1","Home")">檔案下載1 (*.jpg file)</a>
+    <br>
+    <a href="@Url.Action("DownloadFile2","Home")">檔案下載2 (*.zip file)</a>
+</div>
+
+@*<a href="<%=Url.Action(" GetFilePath", "Home" , new { uid=item.UID }) %>">按我下載檔案</a>*@
+
 
 @*<div class="jumbotron">
     <h1>ASP.NET MVC</h1>
