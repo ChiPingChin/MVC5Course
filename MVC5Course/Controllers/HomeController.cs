@@ -52,7 +52,39 @@ namespace MVC5Course.Controllers
         {
             return View();
         }
-             
+
+
+        /// <summary>
+        /// 檔案下載作業(方式一)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFile1()
+        {
+            string filePath = Server.MapPath("~/FileUploads/IMG20170422184840.jpg");
+            string fileType = @"image/jpg";
+            return File(filePath, fileType);
+        }
+
+        /// <summary>
+        /// 檔案下載作業(方式二)
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFile2()
+        {
+            //我要下載的檔案位置
+            string filePath = Server.MapPath("~/FileUploads/IMG20170424105915.zip");
+            string fileType = @"application/zip";
+
+            //取得檔案名稱 (準備給之後下載時的檔案預設命名)
+            string fileName = Path.GetFileName(filePath);
+
+            // 讀成串流
+            Stream iStream = new FileStream(filePath,FileMode.Open, FileAccess.Read, FileShare.Read);
+
+            // 回傳出檔案
+            return File(iStream, fileType, fileName);
+        }
+
 
         //[ActionName("About.aspx")]
         // Action Filter Case : 適用場景：寫 Log, 做 Auth, All Shared Common Operations for Actions
