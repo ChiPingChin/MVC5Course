@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -96,6 +97,51 @@ namespace MVC5Course.Controllers
 
             // 回傳出檔案
             return File(iStream, fileType, fileName);
+        }
+
+
+        /// <summary>
+        /// 檔案下載作業3-1(方式三：多個檔自由選擇下載，含壓縮成一個檔案輸出)
+        /// https://www.mikesdotnetting.com/article/286/downloading-multiple-files-in-asp-net
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DownloadFileIndex()
+        {
+            ViewBag.Files = Directory.EnumerateFiles(Server.MapPath("~/FileUploads"));
+            return View();
+        }
+
+        /// <summary>
+        /// 檔案下載作業3-2
+        /// </summary>
+        /// <param name="files">此參數的名字要和 View 上的 input name 相同才能進行 Model Binding </param>
+        /// <returns></returns>
+        [HttpPost]
+        public FileResult DownloadFileIndex(List<string> files)
+        {
+            var archive = Server.MapPath("~/My_Photo_Archive.zip");
+            var temp = Server.MapPath("~/Temp");
+
+            // clear any existing archive
+            if (System.IO.File.Exists(archive))
+            {
+                System.IO.File.Delete(archive);
+            }
+
+            // empty the temp folder
+            Directory.EnumerateFiles(temp).ToList().ForEach(f => System.IO.File.Delete(f));
+
+            // copy the selected files to the temp folder
+            files.ForEach(f => System.IO.File.Copy(f, Path.Combine(temp, Path.GetFileName(f))));
+
+            // create a new archive file
+            ZipFile.CreateFromDirectory(temp, archive);
+
+            // 回傳 FileResult
+            // 第二個參數為下載檔案的完整路徑名稱
+            // 第二個參數為下載檔案的 Content-Type
+            // 第三個參數為下載時的檔案預設命名
+            return File(archive, "application/zip", "My_Photo_Archive.zip");  
         }
 
 

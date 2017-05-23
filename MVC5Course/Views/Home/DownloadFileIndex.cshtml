@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "DownloadFileIndex";
+}
+
+<h2>Select downloads</h2>
+
+@*https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp*@
+@*https://kkbruce.tw/bs3/CSS*@
+
+@using (Html.BeginForm("DownloadFileIndex", "Home", FormMethod.Post))
+{
+    foreach (string file in ViewBag.Files)
+    {
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="files" value="@file" /> 
+                @Path.GetFileNameWithoutExtension(file) <br />
+            </label>
+        </div>
+    }
+    <hr />
+
+    <div>
+        <button class="btn btn-default">下載</button>
+    </div>
+}
