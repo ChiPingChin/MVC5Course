@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MVC5Course.ActionFilters;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -8,8 +9,9 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
+    [CustomAuthorizeFilter]
     public class HomeController : BaseController
-    {
+    {        
         public ActionResult Index()
         {
             return View();
