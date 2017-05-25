@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace MVC5Course.Controllers
 {
-    [CustomAuthorizeFilter]
+    //[CustomAuthorizeFilter]
     public class HomeController : BaseController
     {        
         public ActionResult Index()
